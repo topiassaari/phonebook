@@ -1,0 +1,47 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+    pull_request:
+      branches: [master]
+      types: [opened, synchronize]
+
+jobs:
+  deployment_pipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: npm install
+        run: npm i
+      - name: lint
+        run: npm run eslint
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm run test
+      - name: e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:e2e
+          start: npm start:test
+          wait-on: http://localhost:3001
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        if: ${{ github.event_name == 'push' || contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "phonebook-fs-2021-saari"
+          heroku_email: "secrets.HEROKU_EMAIL"
+          procfile: "web: npm start"
+          rollbackonhealthcheckfailed: true
+      - uses: actions/checkout@v2
+      - uses: anothrNick/github-tag-action@1.26.0
+        if: ${{ github.event_name == 'push' || contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: "patch"
