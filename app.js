@@ -41,7 +41,7 @@ app.get("/info", (req, res) => {
 
 //get all
 app.get("/api/persons", (req, res) => {
-  Person.find({}).then((persons) => {
+  Person.find().then((persons) => {
     res.json(persons.map((person) => person.toJSON()));
   });
 });
@@ -104,9 +104,5 @@ app.delete("/api/persons/:id", (req, res, next) => {
 });
 
 app.use(errorHandler);
-//listen for changes
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 module.exports = app;
