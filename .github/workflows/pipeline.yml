@@ -40,7 +40,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "phonebook-fs-2021-saari"
-          heroku_email: "secrets.HEROKU_EMAIL"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
           procfile: "web: npm start"
         env:
           MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
