@@ -24,8 +24,12 @@ jobs:
         run: npm run build
       - name: test
         run: npm run test
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
       - name: e2e tests
         uses: cypress-io/github-action@v2
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
         with:
           command: npm run test:e2e
           start: npm start:test
@@ -38,6 +42,8 @@ jobs:
           heroku_app_name: "phonebook-fs-2021-saari"
           heroku_email: "secrets.HEROKU_EMAIL"
           procfile: "web: npm start"
+        env:
+          MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           rollbackonhealthcheckfailed: true
       - uses: actions/checkout@v2
       - uses: anothrNick/github-tag-action@1.26.0
