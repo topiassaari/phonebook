@@ -27,6 +27,10 @@ const errorHandler = (error, _req, res, next) => {
   next(error);
 };
 
+app.get("/health", (req, res) => {
+  res.send("ok");
+});
+
 //get info of phonebook
 app.get("/info", (req, res) => {
   Person.find({})
