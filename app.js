@@ -45,7 +45,7 @@ app.get("/info", (req, res) => {
 
 //get all
 app.get("/api/persons", (req, res) => {
-  Person.find().then((persons) => {
+  Person.find({}).then((persons) => {
     res.json(persons.map((person) => person.toJSON()));
   });
 });
