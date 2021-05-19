@@ -10,5 +10,5 @@ jobs:
     steps:
       - uses: jtalk/url-health-check-action@v1.5
         with:
-          url: https://phonebook-fs-saari.herokuapp.com/health
+          url: https://phonebook-fs-2021-saari.herokuapp.com/health
           retry-all: no

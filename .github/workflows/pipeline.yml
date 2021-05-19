@@ -42,7 +42,7 @@ jobs:
           heroku_app_name: "phonebook-fs-2021-saari"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           procfile: "web: npm start"
-          healthcheck: "https://phonebook-fs-saari.herokuapp.com/health"
+          healthcheck: "https://phonebook-fs-2021-saari.herokuapp.com/health"
           rollbackonhealthcheckfailed: true
         env:
           HD_MONGODB_URI: ${{ secrets.MONGODB_URI }}
